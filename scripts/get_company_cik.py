@@ -1,6 +1,8 @@
-from pathlib import Path
+import json
 
 import pandas as pd
+
+from configs.config import ROOT_DIR, logger
 
 
 def download_company_cik(file_name: str = "company_ciks", sample: int | None = None):
@@ -15,14 +17,17 @@ def download_company_cik(file_name: str = "company_ciks", sample: int | None = N
         sp500_url, storage_options={"User-Agent": "Mozilla/5.0"}
     )[0]
     companies_df = companies_df.sample(sample) if sample else companies_df
-    path_to_save = Path(__file__).resolve().parent.parent / f"data/{file_name}.txt"
+    output_path = ROOT_DIR / f"data/raw/{file_name}.txt"
+    output_path.parent.mkdir(parents=True, exist_ok=True)
 
     try:
-        with open(path_to_save, "w") as f:
+        with open(output_path, "w") as f:
             ciks_str = [f"{cik!s}\n" for cik in companies_df.CIK]
             f.writelines(ciks_str)
     except FileNotFoundError as e:
         print(e)
+    total_ciks = {"total_ciks_downloaded": len(ciks_str)}
+    logger.info(json.dumps(total_ciks, indent=2))
 
 
 if __name__ == "__main__":

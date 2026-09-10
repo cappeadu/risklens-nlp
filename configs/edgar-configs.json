@@ -4,7 +4,7 @@
 		"end_year": 2023,
 		"quarters": [1, 2, 3, 4],
 		"filing_types": ["10-K"],
-		"cik_tickers": "../risklens/data/company_ciks.txt",
+		"cik_tickers": "../risklens/data/raw/company_ciks.txt",
 		"user_agent": "kojo appeadu (appeaduclement@gmail.com)",
 		"raw_filings_folder": "RAW_FILINGS",
 		"indices_folder": "INDICES",
